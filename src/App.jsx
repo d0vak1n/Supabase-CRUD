@@ -40,7 +40,7 @@ function App() {
   };
 
   const completeTask = async (id, isCompleted) => {
-    const { data, error }< = await supabase
+    const { data, error } = await supabase
       .from("TodoList")
       .update({ isCompleted: !isCompleted })
       .eq("id", id);
