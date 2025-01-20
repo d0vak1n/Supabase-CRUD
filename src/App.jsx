@@ -34,6 +34,24 @@ function App() {
     }
   };
 
+  const completeTask = async (id, isCompleted) => {
+    const { data, error } = await supabase
+      .from("TodoList")
+      .update({ isCompleted: !isCompleted })
+      .eq("id", id);
+
+    console.log("data: ", data);
+
+    if (error) {
+      console.log("error toggling task: ", error);
+    } else {
+      const updatedTodoList = todoList.map((todo) =>
+        todo.id === id ? { ...todo, isCompleted: !isCompleted } : todo
+      );
+      setTodoList(updatedTodoList);
+    }
+  };
+
   return (
     <>
       <div>
@@ -47,7 +65,8 @@ function App() {
           {todoList.map((todo) => (
             <li key={todo.id}>
               <p>{todo.name}</p>
-              <button>{todo.isCompleted ? "Undo" : "Complete Task"}</button>
+              <button onClick={() => completeTask(todo.id, todo.isCompleted)}>{todo.isCompleted ? "Undo" : "Complete Task"}</button>
+              <button>Delete Task</button>
             </li>
           ))}
         </ul>
