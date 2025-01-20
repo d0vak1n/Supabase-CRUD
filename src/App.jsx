@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+  }, [todoList]);
 
   const fetchTodos = async () => {
     const { data, error } = await supabase.from("TodoList").select("*");
@@ -25,13 +25,18 @@ function App() {
       name: newTodo,
       isCompleted: false
     }
-    const { data, error } = await supabase.from("TodoList").insert([newTodoData]).single();
+    const { data, error } = await supabase
+      .from("TodoList")
+      .insert([newTodoData])
+      .single();
+
     if (error) {
       console.error("Error adding new todo", error);
     } else {
       setTodoList((prev) => [...prev, data]);
       setNewTodo('');
     }
+
   };
 
   const completeTask = async (id, isCompleted) => {
@@ -77,12 +82,16 @@ function App() {
         </div>
         <ul>
           {todoList.map((todo) => (
-            <li key={todo.id}>
-              <p>{todo.name}</p>
-              <button onClick={() => completeTask(todo.id, todo.isCompleted)}>{todo.isCompleted ? "Undo" : "Complete Task"}</button>
-              <button onClick={() => deleteTask(todo.id)}>Delete Task</button>
-            </li>
-          ))}
+            todo && (
+              <li key={todo.id}>
+                <p> {todo.name}</p>
+                <button onClick={() => completeTask(todo.id, todo.isCompleted)}>
+                  {" "}
+                  {todo.isCompleted ? "Undo" : "Complete Task"}
+                </button>
+                <button onClick={() => deleteTask(todo.id)}> Delete Task</button>
+              </li>
+            )))}
         </ul>
       </div>
     </>
