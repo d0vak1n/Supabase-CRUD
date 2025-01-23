@@ -73,24 +73,28 @@ function App() {
     <>
       <div>
         {""}
-        <h1>Todo List</h1>
-        <div>
-          <input type="text" placeholder='New Todo' value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
-          <button onClick={addTodo}>Add Todo Item</button>
+        <h1 className='m-8'>Todo List</h1>
+        <div className='my-6  drop-shadow-md'>
+          <input className='lg:m-8 lg:p-2 p-2 my-4 mx-4 w-3xs' type="text" placeholder='New Todo' value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
+          <button className='p-8' onClick={addTodo}>Add Todo Item</button>
         </div>
-        <ul>
-          {todoList.map((todo) => (
-            todo && (
-              <li key={todo.id}>
-                <p> {todo.name}</p>
-                <button onClick={() => completeTask(todo.id, todo.isCompleted)}>
-                  {" "}
-                  {todo.isCompleted ? "Undo" : "Complete Task"}
-                </button>
-                <button onClick={() => deleteTask(todo.id)}> Delete Task</button>
-              </li>
-            )))}
-        </ul>
+        <div>
+          <ul>
+            {todoList.map((todo) => (
+              todo && (
+                <div key={todo.id} className='flex justify-center'>
+                  <li className='lg:my-2'>
+                    <p className='my-4 text-lg'> {todo.name}</p>
+                    <button className='mr-4' onClick={() => completeTask(todo.id, todo.isCompleted)}>
+                      {" "}
+                      {todo.isCompleted ? "Undo" : "Complete Task"}
+                    </button>
+                    <button className='ml-4' onClick={() => deleteTask(todo.id)}> Delete Task</button>
+                  </li>
+                </div>
+              )))}
+          </ul>
+        </div>
       </div>
     </>
   )
