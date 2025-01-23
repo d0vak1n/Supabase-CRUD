@@ -95,6 +95,7 @@ function App() {
               )))}
           </ul>
         </div>
+        <p className='my-8'>Made with love by <a href="https://ramoweb.com/">RaMoWeb</a></p>
       </div>
     </>
   )
